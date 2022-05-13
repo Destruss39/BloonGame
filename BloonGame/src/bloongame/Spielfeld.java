@@ -16,15 +16,25 @@ public class Spielfeld extends JPanel {
     
     public Spielfeld() {
         
+        this.setLayout(null);
         this.setLocation(50, 50);
         this.setSize(650, 700);
         this.setBackground(Color.WHITE);
-        this.setVisible(true);
+
         
     }
     
     public boolean Start() {
-        return false; 
+        boolean istZuende = true;
+        
+        Bloon bloons[] = new Bloon[5];
+        
+        for (int i = 0; i < bloons.length; i++) {
+            bloons[i] = new Bloon(i+1, Color.orange);
+            this.add(bloons[i]);
+        }
+        
+        return istZuende;
     }
     
 }
