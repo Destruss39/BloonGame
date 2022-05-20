@@ -43,6 +43,7 @@ public class Fenster extends JFrame {
             btnStart.setText("Spiel läuft...");
             btnStart.setBackground(Color.orange);
             this.StarteSpiel();
+            btnStart.setEnabled(false);
         });
         this.add(btnStart);
         this.pack();
@@ -60,8 +61,9 @@ public class Fenster extends JFrame {
     public void GameLoop() {    
         if (leben <= 0) {
             t.stop();
+            btnStart.setEnabled(true);
         }
-        stats.refresh(spielfeld.getPunkte());
+        stats.refresh(spielfeld.getPunkte(), spielfeld.getLeben());
         spielfeld.startBloons();
     }
     

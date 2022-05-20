@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 public class Spielfeld extends JPanel implements MouseListener {
     
     private int punkte;
+    private int leben = 3;
     
     public Spielfeld() {
         
@@ -36,13 +37,22 @@ public class Spielfeld extends JPanel implements MouseListener {
             bloons[i] = new Bloon();
             bloons[i].addMouseListener(this);
             this.add(bloons[i]);
+            this.bewegeBloons(bloons[i]);
         }
         this.repaint();
         
     }
+    
+    public void bewegeBloons(Bloon bloon) {
+        bloon.bewegen();
+    }
 
     public int getPunkte() {
         return punkte;
+    }
+    
+    public int getLeben() {
+        return leben;
     }
     
     @Override
@@ -54,7 +64,7 @@ public class Spielfeld extends JPanel implements MouseListener {
     public void mousePressed(MouseEvent me) {
         Bloon source = (Bloon)me.getSource();
         this.remove(source);
-        if (source.getBackground() == Color.red) {
+        if (source.getBackground() == Color.green) {
             this.punkte += 1;
         } else if (source.getBackground() == Color.orange) {
             this.punkte += 2;

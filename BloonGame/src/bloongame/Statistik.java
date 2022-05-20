@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 public class Statistik extends JPanel {
     
     private JLabel punkte = new JLabel();
+    private JLabel leben = new JLabel();
     
     public Statistik() {
         
@@ -31,11 +32,19 @@ public class Statistik extends JPanel {
         punkte.setText("Punkte: 0");
         punkte.setFont(new Font("Arial", Font.BOLD, 18));
         
+        leben.setSize(100, 100);
+        leben.setLocation(25, 40);
+        leben.setVisible(true);
+        leben.setText("Leben: 3");
+        leben.setFont(new Font("Arial", Font.BOLD, 18));
+        
         this.add(punkte);
+        this.add(leben);
     }
     
-    public void refresh(int punkte) {
+    public void refresh(int punkte, int leben) {
         this.punkte.setText("Punkte: " + punkte);
+        this.leben.setText("Leben: " + leben);
     }
     
 }
