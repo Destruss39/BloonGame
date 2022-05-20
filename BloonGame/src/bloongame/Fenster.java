@@ -22,7 +22,6 @@ public class Fenster extends JFrame {
     private Statistik stats = new Statistik();
     private JButton btnStart = new JButton();
     private Timer t;
-    private int leben = 5;
     
     public Fenster() {
         
@@ -51,7 +50,7 @@ public class Fenster extends JFrame {
     }
     
     public void StarteSpiel() {
-        t = new Timer(750, (ActionEvent ae) -> {
+        t = new Timer(1500, (ActionEvent ae) -> {
             this.GameLoop();
         });
         t.start();
@@ -59,9 +58,13 @@ public class Fenster extends JFrame {
     }
     
     public void GameLoop() {    
-        if (leben <= 0) {
+        if (spielfeld.getLeben() <= 0) {
             t.stop();
             btnStart.setEnabled(true);
+            spielfeld.setLeben(3);
+            spielfeld.setPunkte(0);
+            btnStart.setText("Neustart");
+            btnStart.setBackground(Color.red);
         }
         stats.refresh(spielfeld.getPunkte(), spielfeld.getLeben());
         spielfeld.startBloons();

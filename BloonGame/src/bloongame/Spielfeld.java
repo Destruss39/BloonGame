@@ -6,10 +6,12 @@
 package bloongame;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 /**
  *
@@ -55,6 +57,14 @@ public class Spielfeld extends JPanel implements MouseListener {
         return leben;
     }
     
+    public void setPunkte(int punkte) {
+        this.punkte = punkte;
+    }
+    
+    public void setLeben(int leben) {
+        this.leben = leben;
+    }
+    
     @Override
     public void mouseClicked(MouseEvent me) {
         
@@ -63,6 +73,8 @@ public class Spielfeld extends JPanel implements MouseListener {
     @Override
     public void mousePressed(MouseEvent me) {
         Bloon source = (Bloon)me.getSource();
+        source.delete(1736538);
+        source.removeMouseListener(this);
         this.remove(source);
         if (source.getBackground() == Color.green) {
             this.punkte += 1;
