@@ -6,10 +6,16 @@
 package bloongame;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
@@ -22,9 +28,8 @@ public class Bloon extends JLabel {
     Random rnd = new Random();
     private int xRichtung;
     private int yRichtung;
-    private int zeit;
-    private Timer timer1;
-    private Timer timer2;
+    private Timer timer;
+    private int praller = 0;
     
     public Bloon() {
         System.out.println("Bloon erschienen.");
@@ -43,8 +48,8 @@ public class Bloon extends JLabel {
             smallBloon();
         }
         
-        int positionX = rnd.nextInt(630)+10;
-        int positionY = rnd.nextInt(680)+10;
+        int positionX = rnd.nextInt(500)+100;
+        int positionY = rnd.nextInt(600)+100;
         
         int randomX = rnd.nextInt(2)+1;
         if (randomX == 1) {
@@ -61,32 +66,26 @@ public class Bloon extends JLabel {
         }
         
         this.setLocation(positionX, positionY);
-        
-        timer1 = new Timer(1000, (ActionEvent ae) -> {
-            zeit += 1;
-            this.timeLeft();
-        });
-        timer1.start();
     } 
     
     public void smallBloon() {
-        this.setSize(10, 10);
+        this.setSize(15, 15);
         this.setBackground(Color.red);
     }
     
     public void mediumBloon() {
-        this.setSize(15, 15);
+        this.setSize(22, 22);
         this.setBackground(Color.orange);
     }
     
     public void bigBloon() {
-        this.setSize(20, 20);
+        this.setSize(30, 30);
         this.setBackground(Color.green);
     }
     
     public void bewegen() {
         
-        timer2 = new Timer(10, (ActionEvent ae) -> {
+        timer = new Timer(5, (ActionEvent ae) -> {
             
             int borderO = 0;
             int borderU = 700;
@@ -95,30 +94,32 @@ public class Bloon extends JLabel {
             
             if (this.getX() <= borderL || this.getX() + this.getWidth() >= borderR) {
                 xRichtung *= (-1); 
+                praller += 1;
             } else if (this.getY() <= borderO || this.getY() + this.getHeight() >= borderU) {
                 yRichtung *= (-1);
+                praller += 1;
             }
             this.setLocation(this.getX() + xRichtung, this.getY() + yRichtung);
+            
+            if (praller >= 2) {
+                delete(1736538);
+            }
+            
         });
-        timer2.start();
+        timer.start();
     }    
     
     public boolean delete(int delay) {
         if (delay == 1736538) {
-            timer1.stop();
-            timer2.stop();
+            timer.stop();
+            this.setVisible(false);
             return true;
         } else {
             return false;
         }
     }
     
-    public boolean timeLeft() {
-        if (zeit == 10) {
-            this.delete(1736538);
-            return true;
-        }
-        return false;
+    public int getPraller() {
+        return praller;
     }
-    
 }

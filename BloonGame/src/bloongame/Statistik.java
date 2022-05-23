@@ -17,34 +17,35 @@ import javax.swing.JPanel;
 public class Statistik extends JPanel {
     
     private JLabel punkte = new JLabel();
-    private JLabel leben = new JLabel();
+    private JLabel timer = new JLabel();
     
     public Statistik() {
         
         this.setLayout(null);
-        this.setLocation(750, 50);
-        this.setSize(200, 600);
-        this.setBackground(Color.WHITE);
+        this.setLocation(750, 25);
+        this.setSize(200, 300);
+        this.setBackground(Color.gray);
 
-        punkte.setSize(100, 100);
-        punkte.setLocation(25, 10);
+        punkte.setSize(200, 100);
+        punkte.setLocation(0, 0);
         punkte.setVisible(true);
         punkte.setText("Punkte: 0");
         punkte.setFont(new Font("Arial", Font.BOLD, 18));
         
-        leben.setSize(100, 100);
-        leben.setLocation(25, 40);
-        leben.setVisible(true);
-        leben.setText("Leben: 3");
-        leben.setFont(new Font("Arial", Font.BOLD, 18));
+        timer.setSize(200, 100);
+        timer.setLocation(0, 25);
+        timer.setVisible(true);
+        timer.setText("Zeit: 0");
+        timer.setFont(new Font("Arial", Font.BOLD, 18));
+        
         
         this.add(punkte);
-        this.add(leben);
+        this.add(timer);
     }
     
-    public void refresh(int punkte, int leben) {
+    public void refresh(int punkte, int time) {
         this.punkte.setText("Punkte: " + punkte);
-        this.leben.setText("Leben: " + leben);
+        this.timer.setText("Zeit: " + time);
     }
     
 }

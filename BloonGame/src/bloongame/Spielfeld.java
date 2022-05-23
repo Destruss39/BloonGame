@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -20,7 +22,10 @@ import javax.swing.Timer;
 public class Spielfeld extends JPanel implements MouseListener {
     
     private int punkte;
-    private int leben = 3;
+    private Bloon bloonList[] = new Bloon[1];
+    private Timer timer;
+    private int maxTime = 60;
+    private int time = maxTime;
     
     public Spielfeld() {
         
@@ -32,17 +37,13 @@ public class Spielfeld extends JPanel implements MouseListener {
     } 
     
     public void startBloons() {
-        
-        Bloon bloons[] = new Bloon[1];
-        
-        for (int i = 0; i < bloons.length; i++) {
-            bloons[i] = new Bloon();
-            bloons[i].addMouseListener(this);
-            this.add(bloons[i]);
-            this.bewegeBloons(bloons[i]);
+        for (int i = 0; i < bloonList.length; i++) {
+            bloonList[i] = new Bloon();  
+            bloonList[i].addMouseListener(this);
+            this.add(bloonList[i]);
+            this.bewegeBloons(bloonList[i]);
         }
         this.repaint();
-        
     }
     
     public void bewegeBloons(Bloon bloon) {
@@ -53,16 +54,8 @@ public class Spielfeld extends JPanel implements MouseListener {
         return punkte;
     }
     
-    public int getLeben() {
-        return leben;
-    }
-    
     public void setPunkte(int punkte) {
         this.punkte = punkte;
-    }
-    
-    public void setLeben(int leben) {
-        this.leben = leben;
     }
     
     @Override
@@ -72,6 +65,7 @@ public class Spielfeld extends JPanel implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent me) {
+        
         Bloon source = (Bloon)me.getSource();
         source.delete(1736538);
         source.removeMouseListener(this);
@@ -101,5 +95,31 @@ public class Spielfeld extends JPanel implements MouseListener {
         
     }
     
+    public void startTimer() {
+        timer = new Timer(1000, (ActionEvent ae) -> {
+            time -= 1;
+        });
+        timer.start();
+    }
+    
+    public void stopTimer() {
+        time = maxTime;
+        punkte = 0;
+        if (this.timer instanceof Timer) {
+            timer.stop();
+        }
+    }
+    
+    public int getTime() {
+        return time;
+    }
+    
+    public int getMaxTime() {
+        return maxTime;
+    }
+    
+    public void setTime(int time) {
+        this.time = time;
+    }
     
 }
